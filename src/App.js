@@ -26,6 +26,7 @@ import ViewUser from './pages/admin/user/viewUser';
 import ProductListAdmin from './pages/admin/product';
 import AddProduct from './pages/admin/product/add';
 import ProductDetail from './pages/admin/product/view';
+import CommentAdmin from './pages/admin/comment';
 
 const App = () => {
   return (
@@ -60,6 +61,7 @@ const App = () => {
           <Route path="viewUser" element={<ViewUser />} />
           <Route path='orders' element={<OrderList />} />
           <Route path='orders/:id' element={<OrderDetail />} />
+          <Route path='comment' element={<CommentAdmin />} />
         </Route>
       </Routes>
     </>
