@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Nav } from 'react-bootstrap';
-import { FaUserEdit, FaTachometerAlt, FaTags, FaUsers, FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import { FaUserEdit, FaTachometerAlt, FaTags, FaUsers, FaChevronDown, FaChevronUp, FaNewspaper } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom';
 import './style.css';
 
 const SidebarAdmin = () => {
     const [categoryOpen, setCategoryOpen] = useState(false);
     const [userOpen, setUserOpen] = useState(false);
+    const [blogOpen, setBlogOpen] = useState(false);
 
     return (
         <div className="sidebar pe-4 pb-3">
@@ -64,6 +65,32 @@ const SidebarAdmin = () => {
                                 className={({ isActive }) => `nav-link py-1 ${isActive ? 'active' : ''}`}
                             >
                                 Thêm danh mục
+                            </NavLink>
+                        </div>
+                    )}
+
+                    {/* Blog dropdown */}
+                    <div
+                        className="nav-link d-flex justify-content-between align-items-center"
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => setBlogOpen(!blogOpen)}
+                    >
+                        <span><FaNewspaper className="me-2" />Bài viết</span>
+                        {blogOpen ? <FaChevronUp size={12} /> : <FaChevronDown size={12} />}
+                    </div>
+                    {blogOpen && (
+                        <div className="ps-4">
+                            <NavLink
+                                to="/admin/blog/list"
+                                className={({ isActive }) => `nav-link py-1 ${isActive ? 'active' : ''}`}
+                            >
+                                Danh sách bài viết
+                            </NavLink>
+                            <NavLink
+                                to="/admin/blog/add"
+                                className={({ isActive }) => `nav-link py-1 ${isActive ? 'active' : ''}`}
+                            >
+                                Thêm bài viết
                             </NavLink>
                         </div>
                     )}
