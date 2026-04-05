@@ -1,5 +1,6 @@
 // /* eslint-disable jsx-a11y/alt-text */
 import './style.css';
+import { Link } from 'react-router-dom';
 import { Container, Button, Row, Col, Card} from 'react-bootstrap';
 import { FaArrowLeft, FaArrowRight, FaFacebookF, FaTwitter, FaInstagram, FaShoppingCart } from 'react-icons/fa';
 
@@ -63,7 +64,7 @@ const PageHome = () => {
                   chất lượng cao nhất.
                 </p>
 
-                <Button className='hero-btn'>
+                <Button className='hero-btn rounded-0'>
                   Mua ngay <FaArrowRight />
                 </Button>
 
@@ -93,8 +94,8 @@ const PageHome = () => {
           <Row className='g-4'>
             {/* LEFT BIG */}
             <Col md={6}>
-              <Card className='banner-card'>
-                <Card.Img src='https://i.pinimg.com/736x/e3/4a/d5/e34ad5dad362d3ef63c5fa02d84c0a5a.jpg' />
+              <Card className='banner-card rounded-0'>
+                <Card.Img src='https://i.pinimg.com/736x/e3/4a/d5/e34ad5dad362d3ef63c5fa02d84c0a5a.jpg' className='rounded-0'/>
                 <Card.ImgOverlay className='banner-overlay'>
                   <h3>Bộ sưu tập quần áo 2030</h3>
                   <p className='shop-now'>Mua ngay</p>
@@ -106,8 +107,8 @@ const PageHome = () => {
             <Col md={6}>
               <Row className='g-4'>
                 <Col md={12}>
-                  <Card className='banner-card small'>
-                    <Card.Img src='https://i.pinimg.com/736x/39/a5/f8/39a5f84a68605f292bcf4f78a8e3097e.jpg' />
+                  <Card className='banner-card small rounded-0'>
+                    <Card.Img src='https://i.pinimg.com/736x/39/a5/f8/39a5f84a68605f292bcf4f78a8e3097e.jpg' className='rounded-0'/>
                     <Card.ImgOverlay className='banner-overlay'>
                       <h4>Phụ kiện</h4>
                       <p className='shop-now'>Mua ngay</p>
@@ -117,8 +118,8 @@ const PageHome = () => {
 
                 {/* RIGHT BOTTOM */}
                 <Col md={12}>
-                  <Card className='banner-card small'>
-                    <Card.Img src='https://i.pinimg.com/736x/b0/e0/e8/b0e0e876ca7b09f13f75295c51e84ed6.jpg' />
+                  <Card className='banner-card small rounded-0'>
+                    <Card.Img src='https://i.pinimg.com/736x/b0/e0/e8/b0e0e876ca7b09f13f75295c51e84ed6.jpg' className='rounded-0'/>
                     <Card.ImgOverlay className='banner-overlay'>
                       <h4>Giày xuân 2030</h4>
                       <p className='shop-now'>Mua ngay</p>
@@ -138,17 +139,19 @@ const PageHome = () => {
 
           <Row className='g-4'>
             {products.map((p, i) => (
-              <Col lg={3} md={6} sm={6} key={p.id} className='mb-4'>
-                <div className='product-card text-center position-relative'>
-                  <div className='product-img mb-3 overflow-hidden position-relative'>
-                    <img src={p.img} alt={p.name} className='img-fluid w-100' />
-                    <div className='product-hover-overlay'>
-                      <FaShoppingCart />
+              <Col lg={3} md={6} sm={6} key={p.id} className='mb-4' >
+                <Link to='/detailShop' className='text-decoration-none text-black'>
+                  <div className='product-card text-center position-relative'>
+                    <div className='product-img mb-3 overflow-hidden position-relative'>
+                      <img src={p.img} alt={p.name} className='img-fluid w-100' />
+                      <div className='product-hover-overlay'>
+                        <FaShoppingCart />
+                      </div>
                     </div>
+                    <h6 className='fw-bold'>{p.name}</h6>
+                    <p className='text-danger fw-bold'>{p.price}</p>
                   </div>
-                  <h6 className='fw-bold'>{p.name}</h6>
-                  <p className='text-danger fw-bold'>{p.price}</p>
-                </div>
+                </Link>
               </Col>
             ))}
           </Row>

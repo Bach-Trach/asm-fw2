@@ -1,14 +1,9 @@
-import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Nav } from 'react-bootstrap';
-import { FaUserEdit, FaTachometerAlt, FaTags, FaUsers, FaChevronDown, FaChevronUp, FaNewspaper } from 'react-icons/fa';
-import { NavLink } from 'react-router-dom';
+import { FaUserEdit, FaTachometerAlt, FaCube } from 'react-icons/fa';
 import './style.css';
 
 const SidebarAdmin = () => {
-    const [categoryOpen, setCategoryOpen] = useState(false);
-    const [userOpen, setUserOpen] = useState(false);
-    const [blogOpen, setBlogOpen] = useState(false);
-
     return (
         <div className="sidebar pe-4 pb-3">
             <nav className="navbar bg-secondary navbar-dark">
@@ -35,85 +30,13 @@ const SidebarAdmin = () => {
                 </div>
 
                 <Nav className="navbar-nav w-100 flex-column">
-                    {/* Dashboard */}
-                    <NavLink
-                        to="/admin/dashboard"
-                        className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
-                    >
-                        <FaTachometerAlt className="me-2" />Bảng điều khiển
-                    </NavLink>
-
-                    {/* Category dropdown */}
-                    <div
-                        className="nav-link d-flex justify-content-between align-items-center"
-                        style={{ cursor: 'pointer' }}
-                        onClick={() => setCategoryOpen(!categoryOpen)}
-                    >
-                        <span><FaTags className="me-2" />Danh mục</span>
-                        {categoryOpen ? <FaChevronUp size={12} /> : <FaChevronDown size={12} />}
-                    </div>
-                    {categoryOpen && (
-                        <div className="ps-4">
-                            <NavLink
-                                to="/admin/category/list"
-                                className={({ isActive }) => `nav-link py-1 ${isActive ? 'active' : ''}`}
-                            >
-                                Danh sách danh mục
-                            </NavLink>
-                            <NavLink
-                                to="/admin/category/add"
-                                className={({ isActive }) => `nav-link py-1 ${isActive ? 'active' : ''}`}
-                            >
-                                Thêm danh mục
-                            </NavLink>
-                        </div>
-                    )}
-
-                    {/* Blog dropdown */}
-                    <div
-                        className="nav-link d-flex justify-content-between align-items-center"
-                        style={{ cursor: 'pointer' }}
-                        onClick={() => setBlogOpen(!blogOpen)}
-                    >
-                        <span><FaNewspaper className="me-2" />Bài viết</span>
-                        {blogOpen ? <FaChevronUp size={12} /> : <FaChevronDown size={12} />}
-                    </div>
-                    {blogOpen && (
-                        <div className="ps-4">
-                            <NavLink
-                                to="/admin/blog/list"
-                                className={({ isActive }) => `nav-link py-1 ${isActive ? 'active' : ''}`}
-                            >
-                                Danh sách bài viết
-                            </NavLink>
-                            <NavLink
-                                to="/admin/blog/add"
-                                className={({ isActive }) => `nav-link py-1 ${isActive ? 'active' : ''}`}
-                            >
-                                Thêm bài viết
-                            </NavLink>
-                        </div>
-                    )}
-
-                    {/* User dropdown */}
-                    <div
-                        className="nav-link d-flex justify-content-between align-items-center"
-                        style={{ cursor: 'pointer' }}
-                        onClick={() => setUserOpen(!userOpen)}
-                    >
-                        <span><FaUsers className="me-2" />Người dùng</span>
-                        {userOpen ? <FaChevronUp size={12} /> : <FaChevronDown size={12} />}
-                    </div>
-                    {userOpen && (
-                        <div className="ps-4">
-                            <NavLink
-                                to="/admin/user/list"
-                                className={({ isActive }) => `nav-link py-1 ${isActive ? 'active' : ''}`}
-                            >
-                                Danh sách người dùng
-                            </NavLink>
-                        </div>
-                    )}
+                    <Nav.Link as={Link} to='/admin/dashboard' className="active"><FaTachometerAlt className="me-2" />DASHBOARD</Nav.Link>
+                    <Nav.Link as={Link} to='/admin/category'><FaCube className="me-2" />DANH MỤC</Nav.Link>
+                    <Nav.Link as={Link} to='/admin/productAdmin'><FaCube className="me-2" />SẢN PHẨM</Nav.Link>
+                    <Nav.Link href="#"><FaCube className="me-2" />BÌNH LUẬN</Nav.Link>
+                    <Nav.Link as={Link} to='/admin/orders'><FaCube className="me-2" />ĐƠN HÀNG</Nav.Link>
+                    <Nav.Link as={Link} to='/admin/blogAdmin'><FaCube className="me-2" />BÀI VIẾT</Nav.Link>
+                    <Nav.Link as={Link} to='/admin/user'><FaCube className="me-2" />NGƯỜI DÙNG</Nav.Link>
                 </Nav>
             </nav>
         </div>
