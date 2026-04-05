@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { useParams, Link } from 'react-router-dom';
+import { Container, Row, Col } from 'react-bootstrap';
 import { FaFacebookF, FaTwitter, FaYoutube, FaLinkedinIn, FaQuoteLeft } from 'react-icons/fa';
 import requestAPI from '../../../RequestAPI';
 import './style.css';
@@ -9,17 +9,38 @@ import './style.css';
 const BlogDetails = () => {
   const { id } = useParams();
   const [blog, setBlog] = useState(null);
+  const [blogs, setBlogs] = useState([]);
+  const [prevBlog, setPrevBlog] = useState(null);
+  const [nextBlog, setNextBlog] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchBlog = async () => {
+    const fetchData = async () => {
       try {
-        const response = await requestAPI({ method: 'GET', url: `/blogs/${id}` });
-        if (response && response.data) {
-          setBlog(response.data.data);
+        // Fetch current blog
+        const blogResponse = await requestAPI({ method: 'GET', url: `/blogs/${id}` });
+        if (blogResponse && blogResponse.data) {
+          setBlog(blogResponse.data.data);
         } else {
           setError('Không tìm thấy blog');
+          return;
+        }
+
+        // Fetch all blogs to find prev/next
+        const blogsResponse = await requestAPI({ method: 'GET', url: '/blogs/list' });
+        if (blogsResponse && blogsResponse.data) {
+          const allBlogs = blogsResponse.data.data || [];
+          setBlogs(allBlogs);
+
+          // Find current blog index
+          const currentIndex = allBlogs.findIndex(b => b.id === parseInt(id));
+          if (currentIndex > 0) {
+            setPrevBlog(allBlogs[currentIndex - 1]);
+          }
+          if (currentIndex < allBlogs.length - 1) {
+            setNextBlog(allBlogs[currentIndex + 1]);
+          }
         }
       } catch (err) {
         setError('Lỗi khi tải blog');
@@ -27,7 +48,7 @@ const BlogDetails = () => {
         setLoading(false);
       }
     };
-    if (id) fetchBlog();
+    if (id) fetchData();
   }, [id]);
 
   if (loading) return <div>Loading...</div>;
@@ -63,7 +84,7 @@ const BlogDetails = () => {
             <Col lg={12} className='mb-5'>
               <div className='blog__details__pic text-center'>
                 <img
-                  src={blog.image || 'https://i.pinimg.com/736x/ca/19/05/ca19054b7037d53e316afb08b45b5440.jpg'}
+                  src={blog.image}
                   alt='Blog Main'
                   className='img-fluid'
                 />
@@ -143,70 +164,37 @@ const BlogDetails = () => {
                   </Row>
                 </div>
 
-                {/* Điều hướng bài viết */}
                 <div className='blog__details__btns border-top border-bottom py-4 my-4'>
                   <Row>
                     <Col xs={6}>
-                      <a href='#' className='blog__details__btns__item text-decoration-none'>
-                        <p className='mb-1 text-muted'>← Bài trước</p>
-                        <h6 className='text-dark'>
-                          Cách sử dụng các trang quảng cáo miễn phí hiệu quả
-                        </h6>
-                      </a>
+                      {prevBlog ? (
+                        <Link to={`/detailBlog/${prevBlog.id}`} className='blog__details__btns__item text-decoration-none'>
+                          <p className='mb-1 text-muted'>← Bài trước</p>
+                          <h6 className='text-dark'>{prevBlog.title}</h6>
+                        </Link>
+                      ) : (
+                        <div className='blog__details__btns__item text-muted'>
+                          <p className='mb-1'>← Bài trước</p>
+                          <h6>Không có</h6>
+                        </div>
+                      )}
                     </Col>
                     <Col xs={6} className='text-end border-start'>
-                      <a href='#' className='blog__details__btns__item text-decoration-none'>
-                        <p className='mb-1 text-muted'>Bài kế tiếp →</p>
-                        <h6 className='text-dark'>
-                          Mẹo chọn loại son bóng hoàn hảo cho đôi môi của bạn
-                        </h6>
-                      </a>
+                      {nextBlog ? (
+                        <Link to={`/detailBlog/${nextBlog.id}`} className='blog__details__btns__item text-decoration-none'>
+                          <p className='mb-1 text-muted'>Bài kế tiếp →</p>
+                          <h6 className='text-dark'>{nextBlog.title}</h6>
+                        </Link>
+                      ) : (
+                        <div className='blog__details__btns__item text-muted text-end'>
+                          <p className='mb-1'>Bài kế tiếp →</p>
+                          <h6>Không có</h6>
+                        </div>
+                      )}
                     </Col>
                   </Row>
                 </div>
 
-                {/* Form bình luận */}
-                <div className='blog__details__comment'>
-                  <h4 className='mb-4'>Để lại bình luận</h4>
-                  <Form>
-                    <Row className='g-3'>
-                      <Col md={4}>
-                        <Form.Control
-                          type='text'
-                          placeholder='Họ tên'
-                          className='custom-input'
-                        />
-                      </Col>
-                      <Col md={4}>
-                        <Form.Control
-                          type='email'
-                          placeholder='Email'
-                          className='custom-input'
-                        />
-                      </Col>
-                      <Col md={4}>
-                        <Form.Control
-                          type='text'
-                          placeholder='Số điện thoại'
-                          className='custom-input'
-                        />
-                      </Col>
-                      <Col xs={12}>
-                        <Form.Control
-                          as='textarea'
-                          rows={4}
-                          placeholder='Bình luận của bạn'
-                          className='custom-input'
-                        />
-                      </Col>
-                      <Col xs={12} className='text-center mt-4'>
-                        <Button variant='dark' type='submit' className='site-btn px-5 py-3'>
-                          Gửi bình luận
-                        </Button>
-                      </Col>
-                    </Row>
-                  </Form>
-                </div>
               </div>
             </Col>
           </Row>
