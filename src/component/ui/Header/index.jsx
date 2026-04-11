@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import './style.css';
 import { Link } from 'react-router-dom';
 import { Container, Nav, Navbar, Row, Col, NavDropdown } from 'react-bootstrap';
@@ -88,3 +89,6 @@ const Header = () => {
 };
 
 export default Header;
+=======
+ 
+>>>>>>> c001253848f2b06703bd1ef70b4fdd72d5968627

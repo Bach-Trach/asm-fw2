@@ -28,7 +28,7 @@ import AddProduct from './pages/admin/product/add';
 import ProductDetail from './pages/admin/product/view';
 import CommentAdmin from './pages/admin/comment';
 
-const App = () => {
+function App() {
   return (
     <>
       <Routes>
@@ -67,6 +67,6 @@ const App = () => {
       </Routes>
     </>
   );
-};
+}
 
 export default App;

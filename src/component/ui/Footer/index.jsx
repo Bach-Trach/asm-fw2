@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import './style.css';
 import { Container, Row, Col, Form } from 'react-bootstrap';
 import { FaEnvelope } from 'react-icons/fa';
@@ -82,3 +83,5 @@ const Footer = () => {
 };
 
 export default Footer;
+=======
+>>>>>>> c001253848f2b06703bd1ef70b4fdd72d5968627
