@@ -36,8 +36,13 @@ class BlogController {
 
     static async create(req, res) {
         try {
-            const { title, content } = req.body;
-            const blog = await BlogModel.create({ title, content });
+            const { title, content, image, createdAt } = req.body;
+            const blog = await BlogModel.create({
+                title,
+                content,
+                image,
+                ...(createdAt ? { createdAt } : {})
+            });
 
             res.status(201).json({
                 message: "Đăng bài viết mới thành công",
@@ -51,14 +56,19 @@ class BlogController {
     static async update(req, res) {
         try {
             const { id } = req.params;
-            const { title, content } = req.body;
+            const { title, content, image, createdAt } = req.body;
 
             const blog = await BlogModel.findByPk(id);
             if (!blog) {
                 return res.status(404).json({ message: "Bài viết không tồn tại" });
             }
 
-            await blog.update({ title, content });
+            await blog.update({
+                title,
+                content,
+                image,
+                ...(createdAt ? { createdAt } : {})
+            });
 
             res.status(200).json({
                 message: "Cập nhật bài viết thành công",

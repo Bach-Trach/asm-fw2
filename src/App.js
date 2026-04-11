@@ -56,7 +56,8 @@ const App = () => {
           <Route path='viewProduct' element={<ProductDetail />} />
           <Route path='blogAdmin' element={<BlogListAdmin />} />
           <Route path='addBlog' element={<AddBlog />} />
-          <Route path='viewBlog' element={<BlogDetail />} />
+          <Route path='editBlog/:id' element={<AddBlog />} />
+          <Route path='viewBlog/:id' element={<BlogDetail />} />
           <Route path="user" element={<UserListAdmin />} />
           <Route path="viewUser" element={<ViewUser />} />
           <Route path='orders' element={<OrderList />} />
